@@ -4,6 +4,7 @@ import './App.css'
 
 const initialpassword = [
   {
+    id: uuidv4(),
     WebsiteName: 'youtube.com',
     UserName: 'srihas',
     Password: 'sai',
@@ -19,7 +20,6 @@ class App extends Component {
   }
 
   onAddContact12 = event => {
-    event.preventDefault()
     const {WebsiteName, UserName, Password} = this.state
     const newPassword = {
       id: uuidv4(),
@@ -29,7 +29,7 @@ class App extends Component {
     }
 
     this.setState(prevState => ({
-      Passwordlists: [...prevState.contactsList, newPassword],
+      Passwordlists: [...prevState.Passwordlists, newPassword],
 
       WebsiteName: '',
       UserName: '',
