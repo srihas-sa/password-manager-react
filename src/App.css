@@ -97,6 +97,24 @@ body {
   justify-content: space-between;
   width: 100%;
 }
+
+.nopasswordimage {
+  height: 200px;
+  width: 50%;
+}
+
+.nopasswordcontainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+}
+
+.nopasswordpara {
+  color: white;
+}
+
 @media (max-width: 767px) {
   .inner {
     width: 100%;

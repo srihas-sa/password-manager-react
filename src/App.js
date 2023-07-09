@@ -3,14 +3,7 @@ import {v4 as uuidv4} from 'uuid'
 import Passwords from './Component/Passwords'
 import './App.css'
 
-const initialpassword = [
-  {
-    id: uuidv4(),
-    WebsiteName: 'youtube.com',
-    UserName: 'srihas',
-    Password: 'sai',
-  },
-]
+const initialpassword = []
 
 class App extends Component {
   state = {
@@ -19,10 +12,11 @@ class App extends Component {
     Password: '',
     Passwordlists: initialpassword,
     search: '',
+    length: 0,
   }
 
   onAddContact12 = event => {
-    const {WebsiteName, UserName, Password} = this.state
+    const {WebsiteName, UserName, Password, length} = this.state
     const newPassword = {
       id: uuidv4(),
       WebsiteName,
@@ -36,6 +30,7 @@ class App extends Component {
       WebsiteName: '',
       UserName: '',
       Password: '',
+      length: length + 1,
     }))
   }
 
@@ -55,8 +50,20 @@ class App extends Component {
     this.setState({search: event.target.value})
   }
 
+  deleteTransaction = id => {
+    const {Passwordlists, length} = this.state
+    const updatedTransactionList = Passwordlists.filter(
+      eachTransaction => id !== eachTransaction.id,
+    )
+
+    this.setState({
+      Passwordlists: updatedTransactionList,
+      length: length - 1,
+    })
+  }
+
   render() {
-    const {Passwordlists} = this.state
+    const {Passwordlists, length} = this.state
 
     return (
       <div className="outer">
@@ -133,7 +140,7 @@ class App extends Component {
 
         <div className="passwordscontainer">
           <div className="cont">
-            <p className="whitehead">Your Passwordws</p>
+            <p className="whitehead">Your Passwordws - {length}</p>
 
             <div className="web">
               <img
@@ -150,11 +157,25 @@ class App extends Component {
             </div>
           </div>
 
-          <ul className="passwordlist">
-            {Passwordlists.map(eachItem => (
-              <Passwords passwordDetails={eachItem} />
-            ))}
-          </ul>
+          {length === 0 ? (
+            <div className="nopasswordcontainer">
+              <img
+                src="https://assets.ccbp.in/frontend/react-js/no-passwords-img.png"
+                alt="no passwords"
+                className="nopasswordimage"
+              />
+              <p className="nopasswordpara">No Passwords</p>
+            </div>
+          ) : (
+            <ul className="passwordlist">
+              {Passwordlists.map(eachItem => (
+                <Passwords
+                  passwordDetails={eachItem}
+                  deleteTransaction={this.deleteTransaction}
+                />
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     )
