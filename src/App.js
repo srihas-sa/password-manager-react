@@ -1,5 +1,6 @@
 import {Component} from 'react'
 import {v4 as uuidv4} from 'uuid'
+import Passwords from './Component/Passwords'
 import './App.css'
 
 const initialpassword = [
@@ -17,6 +18,7 @@ class App extends Component {
     UserName: '',
     Password: '',
     Passwordlists: initialpassword,
+    search: '',
   }
 
   onAddContact12 = event => {
@@ -49,7 +51,13 @@ class App extends Component {
     this.setState({Password: event.target.value})
   }
 
+  onChangeSearch = event => {
+    this.setState({search: event.target.value})
+  }
+
   render() {
+    const {Passwordlists} = this.state
+
     return (
       <div className="outer">
         <img
@@ -121,6 +129,32 @@ class App extends Component {
               className="passwordmanager"
             />
           </div>
+        </div>
+
+        <div className="passwordscontainer">
+          <div className="cont">
+            <p className="whitehead">Your Passwordws</p>
+
+            <div className="web">
+              <img
+                src="https://assets.ccbp.in/frontend/react-js/password-manager-search-img.png"
+                alt="search"
+                className="imageweb"
+              />
+              <input
+                type="text"
+                placeholder="Search"
+                className="website"
+                onChange={this.onChangeSearch}
+              />
+            </div>
+          </div>
+
+          <ul className="passwordlist">
+            {Passwordlists.map(eachItem => (
+              <Passwords passwordDetails={eachItem} />
+            ))}
+          </ul>
         </div>
       </div>
     )
